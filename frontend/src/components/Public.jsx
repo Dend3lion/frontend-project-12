@@ -1,5 +1,7 @@
 import React from "react";
 
-const Public = () => <p>Everyone can see this</p>;
+const Public = () => {
+  return <p>Everyone can see this</p>;
+};
 
 export default Public;

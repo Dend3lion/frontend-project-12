@@ -25,7 +25,7 @@ const Private = () => {
   // fetchContent();
   // }, []);
 
-  return content && <div>Private</div>;
+  return <div>Private</div>;
 };
 
 export default Private;
