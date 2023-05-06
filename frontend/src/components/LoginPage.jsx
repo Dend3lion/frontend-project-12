@@ -7,7 +7,7 @@ import routes from "../routes";
 import * as yup from "yup";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 
-const Auth = () => {
+const LoginPage = () => {
   const auth = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,9 +32,8 @@ const Auth = () => {
         .post(routes.loginPath(), values)
         .catch(() => setAuthSuccesful(false));
 
-      auth.logIn(data, () => {
-        navigate(from, { replace: true });
-      });
+      auth.logIn(data);
+      navigate(from, { replace: true });
     },
   });
 
@@ -93,4 +92,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default LoginPage;

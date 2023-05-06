@@ -15,9 +15,10 @@ const AuthButton = () => {
 
   return auth.loggedIn ? (
     <Button
-      onClick={auth.logOut(() => {
+      onClick={() => {
+        auth.logOut();
         navigate("/");
-      })}
+      }}
     >
       Log out
     </Button>
@@ -28,7 +29,7 @@ const AuthButton = () => {
   );
 };
 
-const Root = () => {
+const Layout = () => {
   return (
     <>
       <Navbar expand="lg">
@@ -42,7 +43,7 @@ const Root = () => {
               <Nav.Link as={Link} to="/public">
                 Public page
               </Nav.Link>
-              <Nav.Link as={Link} to="/private">
+              <Nav.Link as={Link} to="/chat">
                 Private page
               </Nav.Link>
             </Nav>
@@ -56,4 +57,4 @@ const Root = () => {
   );
 };
 
-export default Root;
+export default Layout;
