@@ -9,6 +9,8 @@ import {
   selectors as channelsSelectors,
 } from "../slices/channelsSlice";
 import { actions as messagesActions } from "../slices/messagesSlice";
+import { socket } from "../socket";
+import CommentsTab from "./MessagesTab";
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -21,7 +23,7 @@ const getAuthHeader = () => {
 };
 
 const ChatPage = () => {
-  const [currentChannel, setCurrentChannel] = useState(0);
+  const [currentChannel, setCurrentChannel] = useState(1);
   const dispatch = useDispatch();
   const channels = useSelector(channelsSelectors.selectAll);
 
@@ -37,12 +39,16 @@ const ChatPage = () => {
     };
 
     fetchContent();
+
+    socket.on("newMessage", (payload) => {
+      dispatch(messagesActions.addMessage(payload));
+    });
   }, []);
 
   return (
     <Container>
       <Tab.Container id="channels" defaultActiveKey={currentChannel}>
-        <Row>
+        <Row className="py-3">
           <Col sm={3}>
             <Nav variant="pills" className="flex-column">
               {channels.map((channel) => (
@@ -61,7 +67,7 @@ const ChatPage = () => {
             <Tab.Content>
               {channels.map((channel) => (
                 <Tab.Pane key={channel.id} eventKey={channel.id}>
-                  {channel.name} messages
+                  <CommentsTab channelId={channel.id} />
                 </Tab.Pane>
               ))}
             </Tab.Content>
