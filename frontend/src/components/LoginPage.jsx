@@ -1,7 +1,6 @@
 import useAuth from "../hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import routes from "../routes";
 import * as yup from "yup";
@@ -11,7 +10,6 @@ const LoginPage = () => {
   const auth = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [authSuccesful, setAuthSuccesful] = useState(false);
   const from = location.state.from.pathname || "/";
 
   const formik = useFormik({
@@ -28,9 +26,7 @@ const LoginPage = () => {
         .required("Password is required"),
     }),
     onSubmit: async (values) => {
-      const { data } = await axios
-        .post(routes.loginPath(), values)
-        .catch(() => setAuthSuccesful(false));
+      const { data } = await axios.post(routes.loginPath(), values);
 
       auth.logIn(data);
       navigate(from, { replace: true });

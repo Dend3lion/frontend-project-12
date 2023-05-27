@@ -1,9 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import AuthProvider from "./AuthProvider.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 import ErrorPage from "./ErrorPage.jsx";
 import Layout from "./Layout.jsx";
-import PublicPage from "./PublicPage.jsx";
 import LoginPage from "./LoginPage.jsx";
 import ChatPage from "./ChatPage.jsx";
 
@@ -12,17 +11,15 @@ const App = () => {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<PublicPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="public" element={<PublicPage />} />
           <Route
-            path="chat"
+            index
             element={
               <PrivateRoute>
                 <ChatPage />
               </PrivateRoute>
             }
           />
+          <Route path="login" element={<LoginPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

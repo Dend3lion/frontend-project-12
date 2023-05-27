@@ -1,7 +1,15 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import routes from "../routes";
-import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Container,
+  Dropdown,
+  Row,
+  Stack,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -11,6 +19,9 @@ import {
 import { actions as messagesActions } from "../slices/messagesSlice";
 import { socket } from "../socket";
 import CommentsTab from "./MessagesTab";
+import AddChannelButton from "./AddChannelButton";
+import RenameChannelButton from "./RenameChannelButton";
+import RemoveChannelButton from "./RemoveChannelButton";
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -23,9 +34,11 @@ const getAuthHeader = () => {
 };
 
 const ChatPage = () => {
-  const [currentChannel, setCurrentChannel] = useState(1);
   const dispatch = useDispatch();
   const channels = useSelector(channelsSelectors.selectAll);
+  const currentChannel = useSelector(
+    (state) => state.channels.currentChannelId
+  );
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -33,7 +46,7 @@ const ChatPage = () => {
         headers: getAuthHeader(),
       });
 
-      setCurrentChannel(data.currentChannelId);
+      dispatch(channelsActions.setCurrentChannel(data.currentChannelId));
       dispatch(channelsActions.addChannels(data.channels));
       dispatch(messagesActions.addMessages(data.messages));
     };
@@ -43,37 +56,69 @@ const ChatPage = () => {
     socket.on("newMessage", (payload) => {
       dispatch(messagesActions.addMessage(payload));
     });
+
+    socket.on("newChannel", (payload) => {
+      dispatch(channelsActions.addChannel(payload));
+    });
+
+    socket.on("removeChannel", (payload) => {
+      dispatch(channelsActions.removeChannel(payload.id));
+    });
+
+    socket.on("renameChannel", (payload) => {
+      dispatch(
+        channelsActions.updateChannel({ id: payload.id, changes: payload })
+      );
+    });
   }, []);
 
   return (
     <Container>
-      <Tab.Container id="channels" defaultActiveKey={currentChannel}>
-        <Row className="py-3">
-          <Col sm={3}>
-            <Nav variant="pills" className="flex-column">
-              {channels.map((channel) => (
-                <Nav.Item key={channel.id}>
-                  <Nav.Link
-                    eventKey={channel.id}
-                    onClick={() => setCurrentChannel(channel.id)}
-                  >
-                    {channel.name}
-                  </Nav.Link>
-                </Nav.Item>
-              ))}
-            </Nav>
-          </Col>
-          <Col sm={9}>
-            <Tab.Content>
-              {channels.map((channel) => (
-                <Tab.Pane key={channel.id} eventKey={channel.id}>
-                  <CommentsTab channelId={channel.id} />
-                </Tab.Pane>
-              ))}
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
+      <Row className="py-3">
+        <Col sm={2}>
+          <Stack gap={2}>
+            <AddChannelButton />
+
+            {channels.map((channel) => (
+              <Dropdown as={ButtonGroup} className="w-100">
+                <Button
+                  variant={channel.id === currentChannel ? "primary" : "light"}
+                  onClick={() =>
+                    dispatch(channelsActions.setCurrentChannel(channel.id))
+                  }
+                  className="text-truncate text-start"
+                >
+                  # {channel.name}
+                </Button>
+
+                {channel.removable && (
+                  <Dropdown.Toggle
+                    split
+                    variant={
+                      channel.id === currentChannel ? "primary" : "light"
+                    }
+                    id="addChannelOptions"
+                    className="flex-grow-0"
+                  />
+                )}
+
+                <Dropdown.Menu>
+                  <RenameChannelButton channel={channel} />
+                  <RemoveChannelButton channel={channel} />
+                </Dropdown.Menu>
+              </Dropdown>
+            ))}
+          </Stack>
+        </Col>
+        <Col sm={10}>
+          {channels.map(
+            (channel) =>
+              channel.id === currentChannel && (
+                <CommentsTab key={channel.id} channelId={channel.id} />
+              )
+          )}
+        </Col>
+      </Row>
     </Container>
   );
 };

@@ -1,11 +1,5 @@
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import {
-  Outlet,
-  Link,
-  useLocation,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { Button, Container, Navbar } from "react-bootstrap";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks";
 
 const AuthButton = () => {
@@ -37,18 +31,7 @@ const Layout = () => {
           <Navbar.Brand as={Link} to="/">
             Chat
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/public">
-                Public page
-              </Nav.Link>
-              <Nav.Link as={Link} to="/chat">
-                Private page
-              </Nav.Link>
-            </Nav>
-            <AuthButton />
-          </Navbar.Collapse>
+          <AuthButton />
         </Container>
       </Navbar>
 

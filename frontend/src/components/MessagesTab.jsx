@@ -12,7 +12,7 @@ const CommentsTab = ({ channelId }) => {
   const messages = useSelector(selectors.selectAll);
 
   return (
-    <div className="px-5">
+    <div>
       <Stack>
         {messages
           .filter((message) => message.channelId === channelId)
