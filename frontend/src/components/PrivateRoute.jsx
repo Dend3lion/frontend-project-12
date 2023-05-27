@@ -3,13 +3,8 @@ import useAuth from "../hooks";
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
-  const location = useLocation();
 
-  return auth.loggedIn ? (
-    children
-  ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
-  );
+  return auth.loggedIn ? children : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;

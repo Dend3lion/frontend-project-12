@@ -1,4 +1,4 @@
-import { Button, Container, Navbar } from "react-bootstrap";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks";
 
@@ -23,6 +23,18 @@ const AuthButton = () => {
   );
 };
 
+const RegistrationButton = () => {
+  const auth = useAuth();
+
+  return (
+    !auth.loggedIn && (
+      <Nav.Link as={Link} to="/signup" className="me-3">
+        Register
+      </Nav.Link>
+    )
+  );
+};
+
 const Layout = () => {
   return (
     <>
@@ -31,7 +43,10 @@ const Layout = () => {
           <Navbar.Brand as={Link} to="/">
             Chat
           </Navbar.Brand>
-          <AuthButton />
+          <Nav>
+            <RegistrationButton />
+            <AuthButton />
+          </Nav>
         </Container>
       </Navbar>
 

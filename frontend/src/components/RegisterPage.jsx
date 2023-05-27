@@ -6,7 +6,7 @@ import routes from "../routes";
 import * as yup from "yup";
 import { Button, Container, FloatingLabel, Form, Stack } from "react-bootstrap";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -14,20 +14,36 @@ const LoginPage = () => {
     initialValues: {
       username: "",
       password: "",
+      passwordConfirmation: "",
     },
     validationSchema: yup.object({
       username: yup
         .string("Enter your username")
-        .required("Username is required"),
+        .required("Username is required")
+        .min(3, "Username must be at least 3 characters")
+        .max(20, "Username must be at most 20 characters"),
       password: yup
         .string("Enter your password")
-        .required("Password is required"),
+        .required("Password is required")
+        .min(6, "Password must be at least 6 characters"),
+      passwordConfirmation: yup
+        .string("Confirm your password")
+        .required("Password Confirmation is required")
+        .oneOf([yup.ref("password"), null], "Passwords must match"),
     }),
-    onSubmit: async (values) => {
-      const { data } = await axios.post(routes.loginPath(), values);
+    onSubmit: async ({ username, password }) => {
+      try {
+        const { data } = await axios.post(routes.signUpPath(), {
+          username,
+          password,
+        });
 
-      auth.logIn(data);
-      navigate("/", { replace: true });
+        auth.logIn(data);
+        navigate("/", { replace: true });
+      } catch (e) {
+        if (e.response.status === 409)
+          formik.errors.passwordConfirmation = "User already exists";
+      }
     },
   });
 
@@ -63,6 +79,26 @@ const LoginPage = () => {
               {formik.errors.password}
             </Form.Control.Feedback>
           </FloatingLabel>
+          <FloatingLabel
+            controlId="passwordConfirmation"
+            label="passwordConfirmation"
+          >
+            <Form.Control
+              name="passwordConfirmation"
+              type="password"
+              placeholder="Confirm Password"
+              value={formik.values.passwordConfirmation}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              isInvalid={
+                formik.touched.passwordConfirmation &&
+                formik.errors.passwordConfirmation
+              }
+            />
+            <Form.Control.Feedback type="invalid" tooltip>
+              {formik.errors.passwordConfirmation}
+            </Form.Control.Feedback>
+          </FloatingLabel>
           <Button variant="outline-primary" type="submit">
             Submit
           </Button>
@@ -72,4 +108,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

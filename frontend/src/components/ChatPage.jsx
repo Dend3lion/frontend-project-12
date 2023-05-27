@@ -80,7 +80,7 @@ const ChatPage = () => {
             <AddChannelButton />
 
             {channels.map((channel) => (
-              <Dropdown as={ButtonGroup} className="w-100">
+              <Dropdown key={channel.id} as={ButtonGroup} className="w-100">
                 <Button
                   variant={channel.id === currentChannel ? "primary" : "light"}
                   onClick={() =>
