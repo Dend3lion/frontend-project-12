@@ -1,10 +1,11 @@
 import { useFormik } from "formik";
 import { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, FloatingLabel, Form, Modal } from "react-bootstrap";
 import { socket } from "../socket";
 import { selectors } from "../slices/channelsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { actions as channelsActions } from "../slices/channelsSlice";
+import { useTranslation } from "react-i18next";
 
 const AddChannelButton = ({ setCurrentChannel }) => {
   const [show, setShow] = useState(false);
@@ -12,25 +13,26 @@ const AddChannelButton = ({ setCurrentChannel }) => {
   const handleShow = () => setShow(true);
 
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const channels = useSelector(selectors.selectAll);
 
   const formik = useFormik({
-    initialValues: { channel: "" },
-    validate: ({ channel }) => {
+    initialValues: { channelName: "" },
+    validate: ({ channelName }) => {
       const errors = {};
 
-      if (!channel) {
-        errors.channel = "Required";
-      } else if (channels.find(({ name }) => name === channel)) {
-        errors.channel = "Channel already exists";
+      if (!channelName) {
+        errors.channelName = t("chat.modals.addChannel.errors.required");
+      } else if (channels.find(({ name }) => name === channelName)) {
+        errors.channelName = t("chat.modals.addChannel.errors.channelExists");
       }
 
       return errors;
     },
-    onSubmit: ({ channel }, actions) => {
-      socket.emit("newChannel", { name: channel }, (response) => {
-        if (response.status !== "ok") throw new Error("Channel wasn't added");
+    onSubmit: ({ channelName }, actions) => {
+      socket.emit("newChannel", { name: channelName }, (response) => {
+        if (response.status !== "ok") throw new Error(t("errors.networkError"));
 
         actions.resetForm();
         handleClose();
@@ -42,37 +44,42 @@ const AddChannelButton = ({ setCurrentChannel }) => {
   return (
     <>
       <Button variant="outline-primary" className="mb-3" onClick={handleShow}>
-        Add Channel
+        {t("chat.channels.add")}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Channel</Modal.Title>
+          <Modal.Title>{t("chat.modals.addChannel.title")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
-            <Form.Group className="mb-3" controlId="channel">
-              <Form.Label>Channel name</Form.Label>
+            <FloatingLabel
+              controlId="channelName"
+              label={t("chat.modals.addChannel.placeholder")}
+            >
               <Form.Control
                 type="text"
-                name="channel"
-                value={formik.values.channel}
+                name="channelName"
+                value={formik.values.channelName}
                 onChange={formik.handleChange}
-                isInvalid={formik.touched.channel && formik.errors.channel}
+                onBlur={formik.handleBlur}
+                isInvalid={
+                  formik.touched.channelName && formik.errors.channelName
+                }
                 autoFocus
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.channel}
+                {formik.errors.channelName}
               </Form.Control.Feedback>
-            </Form.Group>
+            </FloatingLabel>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("chat.modals.addChannel.close")}
           </Button>
           <Button variant="primary" onClick={formik.handleSubmit}>
-            Add
+            {t("chat.modals.addChannel.submit")}
           </Button>
         </Modal.Footer>
       </Modal>

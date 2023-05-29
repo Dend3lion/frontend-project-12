@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { Button, Form, InputGroup, Row } from "react-bootstrap";
 import { socket } from "../socket";
+import { useTranslation } from "react-i18next";
 
 const getCurrentUser = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -8,6 +9,8 @@ const getCurrentUser = () => {
 };
 
 const MessageForm = ({ channelId }) => {
+  const { t } = useTranslation();
+
   const formik = useFormik({
     initialValues: { message: "" },
     onSubmit: async ({ message }, actions) => {
@@ -20,7 +23,7 @@ const MessageForm = ({ channelId }) => {
         },
         (response) => {
           if (response.status !== "ok")
-            throw new Error("message wasn't send, try again later");
+            throw new Error(t("errors.networkError"));
 
           actions.resetForm();
         }
@@ -35,13 +38,13 @@ const MessageForm = ({ channelId }) => {
           <Form.Control
             name="message"
             type="text"
-            placeholder="Message"
+            placeholder={t("chat.messages.form.placeholder")}
             value={formik.values.message}
             onChange={formik.handleChange}
             required
           />
           <Button variant="outline-secondary" type="submit">
-            Submit
+            {t("chat.messages.form.submit")}
           </Button>
         </InputGroup>
       </Row>

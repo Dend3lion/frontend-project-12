@@ -5,10 +5,12 @@ import axios from "axios";
 import routes from "../routes";
 import * as yup from "yup";
 import { Button, Container, FloatingLabel, Form, Stack } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const RegisterPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -18,18 +20,18 @@ const RegisterPage = () => {
     },
     validationSchema: yup.object({
       username: yup
-        .string("Enter your username")
-        .required("Username is required")
-        .min(3, "Username must be at least 3 characters")
-        .max(20, "Username must be at most 20 characters"),
+        .string()
+        .required(t("register.errors.required"))
+        .min(3, t("register.errors.usernameLength"))
+        .max(20, t("register.errors.usernameLength")),
       password: yup
-        .string("Enter your password")
-        .required("Password is required")
-        .min(6, "Password must be at least 6 characters"),
+        .string()
+        .required(t("register.errors.required"))
+        .min(6, t("register.errors.passwordLength")),
       passwordConfirmation: yup
-        .string("Confirm your password")
-        .required("Password Confirmation is required")
-        .oneOf([yup.ref("password"), null], "Passwords must match"),
+        .string()
+        .required(t("register.errors.required"))
+        .oneOf([yup.ref("password"), null], t("register.errors.passwordMatch")),
     }),
     onSubmit: async ({ username, password }) => {
       try {
@@ -41,17 +43,23 @@ const RegisterPage = () => {
         auth.logIn(data);
         navigate("/", { replace: true });
       } catch (e) {
-        if (e.response.status === 409)
-          formik.errors.passwordConfirmation = "User already exists";
+        formik.errors.passwordConfirmation =
+          e.response.status === 409
+            ? t("register.errors.userExists")
+            : t("errors.networkError");
       }
     },
   });
 
   return (
     <Container className="align-items-center">
+      <h1>{t("register.title")}</h1>
       <Form onSubmit={formik.handleSubmit}>
         <Stack className="w-50" gap={3}>
-          <FloatingLabel controlId="username" label="Username">
+          <FloatingLabel
+            controlId="username"
+            label={t("register.form.username")}
+          >
             <Form.Control
               name="username"
               type="text"
@@ -65,7 +73,10 @@ const RegisterPage = () => {
               {formik.errors.username}
             </Form.Control.Feedback>
           </FloatingLabel>
-          <FloatingLabel controlId="password" label="Password">
+          <FloatingLabel
+            controlId="password"
+            label={t("register.form.password")}
+          >
             <Form.Control
               name="password"
               type="password"
@@ -81,7 +92,7 @@ const RegisterPage = () => {
           </FloatingLabel>
           <FloatingLabel
             controlId="passwordConfirmation"
-            label="passwordConfirmation"
+            label={t("register.form.passwordConfirmation")}
           >
             <Form.Control
               name="passwordConfirmation"
@@ -100,7 +111,7 @@ const RegisterPage = () => {
             </Form.Control.Feedback>
           </FloatingLabel>
           <Button variant="outline-primary" type="submit">
-            Submit
+            {t("register.form.submit")}
           </Button>
         </Stack>
       </Form>

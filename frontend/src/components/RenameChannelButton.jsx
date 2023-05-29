@@ -1,14 +1,16 @@
 import { useFormik } from "formik";
 import { useState } from "react";
-import { Button, Dropdown, Form, Modal } from "react-bootstrap";
+import { Button, Dropdown, FloatingLabel, Form, Modal } from "react-bootstrap";
 import { socket } from "../socket";
 import { useSelector } from "react-redux";
 import { selectors } from "../slices/channelsSlice";
+import { useTranslation } from "react-i18next";
 
 const RenameChannelButton = ({ channel }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const { t } = useTranslation();
 
   const channels = useSelector(selectors.selectAll);
 
@@ -18,9 +20,11 @@ const RenameChannelButton = ({ channel }) => {
       const errors = {};
 
       if (!channelName) {
-        errors.channelName = "Required";
+        errors.channelName = t("chat.modals.renameChannel.errors.required");
       } else if (channels.find(({ name }) => name === channelName)) {
-        errors.channelName = "Channel already exists";
+        errors.channelName = t(
+          "chat.modals.renameChannel.errors.channelExists"
+        );
       }
 
       return errors;
@@ -31,7 +35,7 @@ const RenameChannelButton = ({ channel }) => {
         { id: channel.id, name: channelName },
         (response) => {
           if (response.status !== "ok")
-            throw new Error("Channel wasn't renamed");
+            throw new Error(t("errors.networkError"));
 
           handleClose();
         }
@@ -46,22 +50,25 @@ const RenameChannelButton = ({ channel }) => {
         className="mb-3"
         onClick={handleShow}
       >
-        Rename
+        {t("chat.channels.rename")}
       </Dropdown.Item>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Rename Channel</Modal.Title>
+          <Modal.Title>{t("chat.modals.renameChannel.title")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
-            <Form.Group className="mb-3" controlId="channelName">
-              <Form.Label>Channel name</Form.Label>
+            <FloatingLabel
+              controlId="channelName"
+              label={t("chat.modals.renameChannel.placeholder")}
+            >
               <Form.Control
                 type="text"
                 name="channelName"
                 value={formik.values.channelName}
                 onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 isInvalid={
                   formik.touched.channelName && formik.errors.channelName
                 }
@@ -70,15 +77,15 @@ const RenameChannelButton = ({ channel }) => {
               <Form.Control.Feedback type="invalid">
                 {formik.errors.channelName}
               </Form.Control.Feedback>
-            </Form.Group>
+            </FloatingLabel>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("chat.modals.renameChannel.close")}
           </Button>
           <Button variant="primary" onClick={formik.handleSubmit}>
-            Rename
+            {t("chat.modals.renameChannel.submit")}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -5,10 +5,12 @@ import axios from "axios";
 import routes from "../routes";
 import * as yup from "yup";
 import { Button, Container, FloatingLabel, Form, Stack } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const LoginPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -16,12 +18,8 @@ const LoginPage = () => {
       password: "",
     },
     validationSchema: yup.object({
-      username: yup
-        .string("Enter your username")
-        .required("Username is required"),
-      password: yup
-        .string("Enter your password")
-        .required("Password is required"),
+      username: yup.string().required(t("login.errors.required")),
+      password: yup.string().required(t("login.errors.required")),
     }),
     onSubmit: async (values) => {
       const { data } = await axios.post(routes.loginPath(), values);
@@ -33,13 +31,13 @@ const LoginPage = () => {
 
   return (
     <Container className="align-items-center">
+      <h1>{t("login.title")}</h1>
       <Form onSubmit={formik.handleSubmit}>
         <Stack className="w-50" gap={3}>
-          <FloatingLabel controlId="username" label="Username">
+          <FloatingLabel controlId="username" label={t("login.form.username")}>
             <Form.Control
               name="username"
               type="text"
-              placeholder="Username"
               value={formik.values.username}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -49,11 +47,10 @@ const LoginPage = () => {
               {formik.errors.username}
             </Form.Control.Feedback>
           </FloatingLabel>
-          <FloatingLabel controlId="password" label="Password">
+          <FloatingLabel controlId="password" label={t("login.form.password")}>
             <Form.Control
               name="password"
               type="password"
-              placeholder="Password"
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -64,7 +61,7 @@ const LoginPage = () => {
             </Form.Control.Feedback>
           </FloatingLabel>
           <Button variant="outline-primary" type="submit">
-            Submit
+            {t("login.form.submit")}
           </Button>
         </Stack>
       </Form>
