@@ -52,7 +52,7 @@ const ru = {
           success: "Канал создан",
           errors: {
             required: "Обязательное поле",
-            channelExists: "Канал существует",
+            channelExists: "Должно быть уникальным",
             channelLength: "От 3 до 20 символов",
           },
         },
