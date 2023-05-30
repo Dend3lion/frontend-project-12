@@ -22,7 +22,7 @@ const RenameChannelButton = ({ channel }) => {
 
       if (!name) {
         errors.name = t("chat.modals.renameChannel.errors.required");
-      } else if (channels.find(({ name }) => name === name)) {
+      } else if (channels.find((channel) => channel.name === name)) {
         errors.name = t("chat.modals.renameChannel.errors.channelExists");
       } else if (name.length < 3 || name.length > 20) {
         errors.name = t("chat.modals.renameChannel.errors.channelLength");

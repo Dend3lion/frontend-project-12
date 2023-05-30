@@ -40,6 +40,7 @@ const en = {
       channels: {
         channels: "Channels",
         addChannel: "Add Channel",
+        optionsLabel: "Channel Management",
         rename: "Rename",
         remove: "Remove",
       },
