@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { Button, Form, InputGroup, Row } from "react-bootstrap";
 import { socket } from "../socket";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const getCurrentUser = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -22,8 +23,8 @@ const MessageForm = ({ channelId }) => {
           username: getCurrentUser(),
         },
         (response) => {
-          if (response.status !== "ok")
-            throw new Error(t("errors.networkError"));
+          console.log(response);
+          if (response.status !== "ok") toast.error(t("errors.networkError"));
 
           actions.resetForm();
         }

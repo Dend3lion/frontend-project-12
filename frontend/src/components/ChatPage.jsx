@@ -22,6 +22,8 @@ import CommentsTab from "./MessagesTab";
 import AddChannelButton from "./AddChannelButton";
 import RenameChannelButton from "./RenameChannelButton";
 import RemoveChannelButton from "./RemoveChannelButton";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -39,6 +41,7 @@ const ChatPage = () => {
   const currentChannel = useSelector(
     (state) => state.channels.currentChannelId
   );
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -69,6 +72,10 @@ const ChatPage = () => {
       dispatch(
         channelsActions.updateChannel({ id: payload.id, changes: payload })
       );
+    });
+
+    socket.on("connect_error", () => {
+      toast.error(t("errors.connectionLost"));
     });
   }, []);
 

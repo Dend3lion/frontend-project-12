@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Dropdown, Modal } from "react-bootstrap";
 import { socket } from "../socket";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const RemoveChannelButton = ({ channel }) => {
   const [show, setShow] = useState(false);
@@ -11,9 +12,10 @@ const RemoveChannelButton = ({ channel }) => {
 
   const onSubmit = () => {
     socket.emit("removeChannel", { id: channel.id }, (response) => {
-      if (response.status !== "ok") throw new Error(t("errors.networkError"));
+      if (response.status !== "ok") toast.error(t("errors.networkError"));
 
       handleClose();
+      toast.success(t("chat.modals.removeChannel.success"));
     });
   };
 

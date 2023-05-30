@@ -6,6 +6,7 @@ import { selectors } from "../slices/channelsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { actions as channelsActions } from "../slices/channelsSlice";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const AddChannelButton = ({ setCurrentChannel }) => {
   const [show, setShow] = useState(false);
@@ -32,11 +33,12 @@ const AddChannelButton = ({ setCurrentChannel }) => {
     },
     onSubmit: ({ channelName }, actions) => {
       socket.emit("newChannel", { name: channelName }, (response) => {
-        if (response.status !== "ok") throw new Error(t("errors.networkError"));
+        if (response.status !== "ok") toast.error(t("errors.networkError"));
 
         actions.resetForm();
         handleClose();
         dispatch(channelsActions.setCurrentChannel(response.data.id));
+        toast.success(t("chat.modals.addChannel.success"));
       });
     },
   });

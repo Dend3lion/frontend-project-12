@@ -2,6 +2,8 @@ import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthButton = () => {
   const auth = useAuth();
@@ -43,6 +45,8 @@ const Layout = () => {
 
   return (
     <>
+      <ToastContainer />
+
       <Navbar expand="lg">
         <Container>
           <Navbar.Brand as={Link} to="/">

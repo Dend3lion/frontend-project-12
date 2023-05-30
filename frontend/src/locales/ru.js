@@ -49,6 +49,7 @@ const ru = {
           placeholder: "Имя канала",
           close: "Отменить",
           submit: "Добавить",
+          success: "Канал создан",
           errors: {
             required: "Обязательное поле",
             channelExists: "Канал существует",
@@ -59,6 +60,7 @@ const ru = {
           placeholder: "Имя канала",
           close: "Отменить",
           submit: "Переименовать",
+          success: "Канал переименован",
           errors: {
             required: "Обязательное поле",
             channelExists: "Канал существует",
@@ -69,6 +71,7 @@ const ru = {
           body: "Вы уверены?",
           close: "Отменить",
           submit: "Удалить",
+          success: "Канал удален",
         },
       },
       messages: {
@@ -84,6 +87,7 @@ const ru = {
         body: "произошла непредвиденная ошибка.",
       },
       networkError: "Что-то пошло не так. Попробуйте позже",
+      connectionLost: "Соединение прервано. Переподключаюсь...",
     },
   },
 };

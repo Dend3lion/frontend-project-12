@@ -49,6 +49,7 @@ const en = {
           placeholder: "Channel name",
           close: "Close",
           submit: "Add",
+          success: "Channel added",
           errors: {
             required: "Required field",
             channelExists: "Channel exists",
@@ -59,6 +60,7 @@ const en = {
           placeholder: "Channel name",
           close: "Close",
           submit: "Rename",
+          success: "Channel renamed",
           errors: {
             required: "Required field",
             channelExists: "Channel exists",
@@ -69,6 +71,7 @@ const en = {
           body: "Are you sure?",
           close: "Close",
           submit: "Remove",
+          success: "Channel removed",
         },
       },
       messages: {
@@ -84,6 +87,7 @@ const en = {
         body: "Sorry, an unexpected error has occurred.",
       },
       networkError: "Something went wrong. Try again later",
+      connectionLost: "Connection was lost. Reconnecting...",
     },
   },
 };

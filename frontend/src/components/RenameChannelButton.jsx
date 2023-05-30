@@ -5,6 +5,7 @@ import { socket } from "../socket";
 import { useSelector } from "react-redux";
 import { selectors } from "../slices/channelsSlice";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const RenameChannelButton = ({ channel }) => {
   const [show, setShow] = useState(false);
@@ -34,10 +35,10 @@ const RenameChannelButton = ({ channel }) => {
         "renameChannel",
         { id: channel.id, name: channelName },
         (response) => {
-          if (response.status !== "ok")
-            throw new Error(t("errors.networkError"));
+          if (response.status !== "ok") toast.error(t("errors.networkError"));
 
           handleClose();
+          toast.success(t("chat.modals.renameChannel.success"));
         }
       );
     },
@@ -68,7 +69,6 @@ const RenameChannelButton = ({ channel }) => {
                 name="channelName"
                 value={formik.values.channelName}
                 onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
                 isInvalid={
                   formik.touched.channelName && formik.errors.channelName
                 }
