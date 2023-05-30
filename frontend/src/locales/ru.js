@@ -48,7 +48,7 @@ const ru = {
           title: "Добавить канал",
           placeholder: "Имя канала",
           close: "Отменить",
-          submit: "Добавить",
+          submit: "Отправить",
           success: "Канал создан",
           errors: {
             required: "Обязательное поле",
@@ -59,7 +59,7 @@ const ru = {
           title: "Переименовать канал",
           placeholder: "Имя канала",
           close: "Отменить",
-          submit: "Переименовать",
+          submit: "Отправить",
           success: "Канал переименован",
           errors: {
             required: "Обязательное поле",
