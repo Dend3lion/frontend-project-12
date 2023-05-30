@@ -19,22 +19,22 @@ const AddChannelButton = ({ setCurrentChannel }) => {
   const channels = useSelector(selectors.selectAll);
 
   const formik = useFormik({
-    initialValues: { channelName: "" },
-    validate: ({ channelName }) => {
+    initialValues: { name: "" },
+    validate: ({ name }) => {
       const errors = {};
 
-      if (!channelName) {
-        errors.channelName = t("chat.modals.addChannel.errors.required");
-      } else if (channels.find(({ name }) => name === channelName)) {
-        errors.channelName = t("chat.modals.addChannel.errors.channelExists");
-      } else if (channelName.length < 3 || channelName.length > 20) {
-        errors.channelName = t("chat.modals.addChannel.errors.channelLength");
+      if (!name) {
+        errors.name = t("chat.modals.addChannel.errors.required");
+      } else if (channels.find(({ name }) => name === name)) {
+        errors.name = t("chat.modals.addChannel.errors.channelExists");
+      } else if (name.length < 3 || name.length > 20) {
+        errors.name = t("chat.modals.addChannel.errors.channelLength");
       }
 
       return errors;
     },
-    onSubmit: ({ channelName }, actions) => {
-      socket.emit("newChannel", { name: channelName }, (response) => {
+    onSubmit: ({ name }, actions) => {
+      socket.emit("newChannel", { name: name }, (response) => {
         if (response.status !== "ok") toast.error(t("errors.networkError"));
 
         handleClose();
@@ -58,22 +58,20 @@ const AddChannelButton = ({ setCurrentChannel }) => {
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
             <FloatingLabel
-              controlId="channelName"
+              controlId="name"
               label={t("chat.modals.addChannel.placeholder")}
             >
               <Form.Control
                 type="text"
-                name="channelName"
-                value={formik.values.channelName}
+                name="name"
+                value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                isInvalid={
-                  formik.touched.channelName && formik.errors.channelName
-                }
+                isInvalid={formik.touched.name && formik.errors.name}
                 autoFocus
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.channelName}
+                {formik.errors.name}
               </Form.Control.Feedback>
             </FloatingLabel>
           </Form>

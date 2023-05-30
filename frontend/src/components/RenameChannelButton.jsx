@@ -16,28 +16,24 @@ const RenameChannelButton = ({ channel }) => {
   const channels = useSelector(selectors.selectAll);
 
   const formik = useFormik({
-    initialValues: { channelName: channel.name },
-    validate: ({ channelName }) => {
+    initialValues: { name: channel.name },
+    validate: ({ name }) => {
       const errors = {};
 
-      if (!channelName) {
-        errors.channelName = t("chat.modals.renameChannel.errors.required");
-      } else if (channels.find(({ name }) => name === channelName)) {
-        errors.channelName = t(
-          "chat.modals.renameChannel.errors.channelExists"
-        );
-      } else if (channelName.length < 3 || channelName.length > 20) {
-        errors.channelName = t(
-          "chat.modals.renameChannel.errors.channelLength"
-        );
+      if (!name) {
+        errors.name = t("chat.modals.renameChannel.errors.required");
+      } else if (channels.find(({ name }) => name === name)) {
+        errors.name = t("chat.modals.renameChannel.errors.channelExists");
+      } else if (name.length < 3 || name.length > 20) {
+        errors.name = t("chat.modals.renameChannel.errors.channelLength");
       }
 
       return errors;
     },
-    onSubmit: ({ channelName }, actions) => {
+    onSubmit: ({ name }, actions) => {
       socket.emit(
         "renameChannel",
-        { id: channel.id, name: channelName },
+        { id: channel.id, name: name },
         (response) => {
           if (response.status !== "ok") toast.error(t("errors.networkError"));
 
@@ -65,21 +61,19 @@ const RenameChannelButton = ({ channel }) => {
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
             <FloatingLabel
-              controlId="channelName"
+              controlId="name"
               label={t("chat.modals.renameChannel.placeholder")}
             >
               <Form.Control
                 type="text"
-                name="channelName"
-                value={formik.values.channelName}
+                name="name"
+                value={formik.values.name}
                 onChange={formik.handleChange}
-                isInvalid={
-                  formik.touched.channelName && formik.errors.channelName
-                }
+                isInvalid={formik.touched.name && formik.errors.name}
                 autoFocus
               />
               <Form.Control.Feedback type="invalid">
-                {formik.errors.channelName}
+                {formik.errors.name}
               </Form.Control.Feedback>
             </FloatingLabel>
           </Form>
