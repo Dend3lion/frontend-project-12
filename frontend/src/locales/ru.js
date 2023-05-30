@@ -53,6 +53,7 @@ const ru = {
           errors: {
             required: "Обязательное поле",
             channelExists: "Канал существует",
+            channelLength: "От 3 до 20 символов",
           },
         },
         renameChannel: {
@@ -64,6 +65,7 @@ const ru = {
           errors: {
             required: "Обязательное поле",
             channelExists: "Канал существует",
+            channelLength: "От 3 до 20 символов",
           },
         },
         removeChannel: {

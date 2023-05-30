@@ -27,6 +27,8 @@ const AddChannelButton = ({ setCurrentChannel }) => {
         errors.channelName = t("chat.modals.addChannel.errors.required");
       } else if (channels.find(({ name }) => name === channelName)) {
         errors.channelName = t("chat.modals.addChannel.errors.channelExists");
+      } else if (channelName.length < 3 || channelName.length > 20) {
+        errors.channelName = t("chat.modals.addChannel.errors.channelLength");
       }
 
       return errors;
@@ -35,8 +37,8 @@ const AddChannelButton = ({ setCurrentChannel }) => {
       socket.emit("newChannel", { name: channelName }, (response) => {
         if (response.status !== "ok") toast.error(t("errors.networkError"));
 
-        actions.resetForm();
         handleClose();
+        actions.resetForm();
         dispatch(channelsActions.setCurrentChannel(response.data.id));
         toast.success(t("chat.modals.addChannel.success"));
       });
