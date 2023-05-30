@@ -73,10 +73,6 @@ const ChatPage = () => {
         channelsActions.updateChannel({ id: payload.id, changes: payload })
       );
     });
-
-    socket.on("connect_error", () => {
-      toast.error(t("errors.connectionLost"));
-    });
   }, []);
 
   return (
