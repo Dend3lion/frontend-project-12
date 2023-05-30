@@ -6,6 +6,7 @@ import routes from "../routes";
 import * as yup from "yup";
 import { Button, Container, FloatingLabel, Form, Stack } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -22,10 +23,16 @@ const LoginPage = () => {
       password: yup.string().required(t("login.errors.required")),
     }),
     onSubmit: async (values) => {
-      const { data } = await axios.post(routes.loginPath(), values);
+      try {
+        const { data } = await axios.post(routes.loginPath(), values);
 
-      auth.logIn(data);
-      navigate("/", { replace: true });
+        auth.logIn(data);
+        navigate("/", { replace: true });
+      } catch (e) {
+        if (e?.response?.status === 401) {
+          formik.errors.password = t("login.errors.wrongCredentials");
+        } else toast.error(t("errors.networkError"));
+      }
     },
   });
 

@@ -1,11 +1,12 @@
 import useAuth from "../hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import routes from "../routes";
 import * as yup from "yup";
 import { Button, Container, FloatingLabel, Form, Stack } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const auth = useAuth();
@@ -43,10 +44,11 @@ const RegisterPage = () => {
         auth.logIn(data);
         navigate("/", { replace: true });
       } catch (e) {
-        formik.errors.passwordConfirmation =
-          e.response.status === 409
-            ? t("register.errors.userExists")
-            : t("errors.networkError");
+        if (e?.response?.status === 409)
+          formik.errors.passwordConfirmation = t("register.errors.userExists");
+        else toast.error(t("errors.networkError"));
+
+        console.log(e);
       }
     },
   });
