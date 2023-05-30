@@ -51,6 +51,7 @@ const MessageForm = ({ channelId }) => {
             value={formik.values.message}
             onChange={formik.handleChange}
             required
+            autoFocus
           />
           <Button variant="outline-secondary" type="submit">
             {t("chat.messages.form.submit")}
