@@ -76,6 +76,7 @@ const ru = {
       },
       messages: {
         form: {
+          label: "Новое сообщение",
           placeholder: "Сообщение",
           submit: "Отправить",
         },

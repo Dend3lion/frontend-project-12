@@ -21,12 +21,12 @@ const MessageForm = ({ channelId }) => {
   }, []);
 
   const formik = useFormik({
-    initialValues: { message: "" },
-    onSubmit: async ({ message }, actions) => {
+    initialValues: { body: "" },
+    onSubmit: async ({ body }, actions) => {
       socket.emit(
         "newMessage",
         {
-          body: filter.clean(message),
+          body: filter.clean(body),
           channelId,
           username: getCurrentUser(),
         },
@@ -45,15 +45,20 @@ const MessageForm = ({ channelId }) => {
       <Row className="g-2">
         <InputGroup className="mb-3">
           <Form.Control
-            name="message"
+            aria-label={t("chat.messages.form.label")}
+            name="body"
             type="text"
             placeholder={t("chat.messages.form.placeholder")}
-            value={formik.values.message}
+            value={formik.values.body}
             onChange={formik.handleChange}
             required
             autoFocus
           />
-          <Button variant="outline-secondary" type="submit">
+          <Button
+            variant="outline-secondary"
+            type="submit"
+            disabled={!(formik.isValid && formik.dirty)}
+          >
             {t("chat.messages.form.submit")}
           </Button>
         </InputGroup>

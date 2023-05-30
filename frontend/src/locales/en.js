@@ -76,6 +76,7 @@ const en = {
       },
       messages: {
         form: {
+          label: "New message",
           placeholder: "Message",
           submit: "Submit",
         },
