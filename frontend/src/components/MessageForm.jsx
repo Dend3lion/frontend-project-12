@@ -3,6 +3,8 @@ import { Button, Form, InputGroup, Row } from "react-bootstrap";
 import { socket } from "../socket";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import filter from "leo-profanity";
+import { useEffect } from "react";
 
 const getCurrentUser = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -12,13 +14,19 @@ const getCurrentUser = () => {
 const MessageForm = ({ channelId }) => {
   const { t } = useTranslation();
 
+  useEffect(() => {
+    filter.add(filter.getDictionary("en"));
+    filter.add(filter.getDictionary("fr"));
+    filter.add(filter.getDictionary("ru"));
+  }, []);
+
   const formik = useFormik({
     initialValues: { message: "" },
     onSubmit: async ({ message }, actions) => {
       socket.emit(
         "newMessage",
         {
-          body: message,
+          body: filter.clean(message),
           channelId,
           username: getCurrentUser(),
         },
