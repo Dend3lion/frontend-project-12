@@ -59,7 +59,7 @@ const ChatPage = () => {
     socket.on('renameChannel', (payload) => {
       dispatch(channelsActions.updateChannel({ id: payload.id, changes: payload }));
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container>
