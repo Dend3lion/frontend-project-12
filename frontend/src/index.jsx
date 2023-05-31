@@ -1,20 +1,19 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./components/App";
-import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./slices/index.js";
-import "./i18n";
-import { Provider as RollbarProvider, ErrorBoundary } from "@rollbar/react";
+import { ErrorBoundary, Provider as RollbarProvider } from '@rollbar/react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import App from './components/App';
+import './i18n';
+import store from './slices/index.js';
 
 const rollbarConfig = {
-  accessToken: "0acfa198449f4a2ca9057cb86f63c3c0",
-  environment: "testenv",
+  accessToken: '0acfa198449f4a2ca9057cb86f63c3c0',
+  environment: 'testenv',
 };
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <RollbarProvider config={rollbarConfig}>
     <ErrorBoundary>

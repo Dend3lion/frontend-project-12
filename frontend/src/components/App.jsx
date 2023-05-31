@@ -1,11 +1,11 @@
-import { Route, Routes } from "react-router-dom";
-import AuthProvider from "./AuthProvider.jsx";
-import PrivateRoute from "./PrivateRoute.jsx";
-import ErrorPage from "./ErrorPage.jsx";
-import Layout from "./Layout.jsx";
-import LoginPage from "./LoginPage.jsx";
-import ChatPage from "./ChatPage.jsx";
-import RegisterPage from "./RegisterPage.jsx";
+import { Route, Routes } from 'react-router-dom';
+import AuthProvider from './AuthProvider.jsx';
+import ChatPage from './ChatPage.jsx';
+import ErrorPage from './ErrorPage.jsx';
+import Layout from './Layout.jsx';
+import LoginPage from './LoginPage.jsx';
+import PrivateRoute from './PrivateRoute.jsx';
+import RegisterPage from './RegisterPage.jsx';
 
 const App = () => {
   return (

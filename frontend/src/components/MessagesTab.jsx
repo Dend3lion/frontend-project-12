@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
-import { selectors } from "../slices/messagesSlice";
-import { Stack } from "react-bootstrap";
-import MessageForm from "./MessageForm";
+import { Stack } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { selectors } from '../slices/messagesSlice';
+import MessageForm from './MessageForm';
 
 const getCurrentUser = () => {
-  const userId = JSON.parse(localStorage.getItem("userId"));
+  const userId = JSON.parse(localStorage.getItem('userId'));
   return userId && userId.username;
 };
 
@@ -24,12 +24,9 @@ const CommentsTab = ({ channelId }) => {
                 gap={2}
                 key={message.id}
                 className={`m-1 px-3 py-2 bg-light text-dark ${
-                  isCurrentUser ? "align-self-end" : "align-self-start"
-                }`}
-              >
-                {!isCurrentUser && (
-                  <div className="fw-semibold fs-6">{message.username}</div>
-                )}
+                  isCurrentUser ? 'align-self-end' : 'align-self-start'
+                }`}>
+                {!isCurrentUser && <div className="fw-semibold fs-6">{message.username}</div>}
                 <div>{message.body}</div>
               </Stack>
             );

@@ -1,5 +1,5 @@
-import { Navigate, useLocation } from "react-router-dom";
-import useAuth from "../hooks";
+import { Navigate } from 'react-router-dom';
+import useAuth from '../hooks';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();

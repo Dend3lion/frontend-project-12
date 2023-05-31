@@ -1,12 +1,12 @@
-import useAuth from "../hooks";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import axios from "axios";
-import routes from "../routes";
-import * as yup from "yup";
-import { Button, Container, FloatingLabel, Form, Stack } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { useFormik } from 'formik';
+import { Button, Container, FloatingLabel, Form, Stack } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import * as yup from 'yup';
+import useAuth from '../hooks';
+import routes from '../routes';
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -15,33 +15,33 @@ const LoginPage = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
     },
     validationSchema: yup.object({
-      username: yup.string().required(t("login.errors.required")),
-      password: yup.string().required(t("login.errors.required")),
+      username: yup.string().required(t('login.errors.required')),
+      password: yup.string().required(t('login.errors.required')),
     }),
     onSubmit: async (values) => {
       try {
         const { data } = await axios.post(routes.loginPath(), values);
 
         auth.logIn(data);
-        navigate("/", { replace: true });
+        navigate('/', { replace: true });
       } catch (e) {
         if (e?.response?.status === 401) {
-          formik.errors.password = t("login.errors.wrongCredentials");
-        } else toast.error(t("errors.networkError"));
+          formik.errors.password = t('login.errors.wrongCredentials');
+        } else toast.error(t('errors.networkError'));
       }
     },
   });
 
   return (
     <Container className="align-items-center">
-      <h1>{t("login.title")}</h1>
+      <h1>{t('login.title')}</h1>
       <Form onSubmit={formik.handleSubmit}>
         <Stack className="w-50" gap={3}>
-          <FloatingLabel controlId="username" label={t("login.form.username")}>
+          <FloatingLabel controlId="username" label={t('login.form.username')}>
             <Form.Control
               name="username"
               type="text"
@@ -54,7 +54,7 @@ const LoginPage = () => {
               {formik.errors.username}
             </Form.Control.Feedback>
           </FloatingLabel>
-          <FloatingLabel controlId="password" label={t("login.form.password")}>
+          <FloatingLabel controlId="password" label={t('login.form.password')}>
             <Form.Control
               name="password"
               type="password"
@@ -68,7 +68,7 @@ const LoginPage = () => {
             </Form.Control.Feedback>
           </FloatingLabel>
           <Button variant="outline-primary" type="submit">
-            {t("login.form.submit")}
+            {t('login.form.submit')}
           </Button>
         </Stack>
       </Form>
