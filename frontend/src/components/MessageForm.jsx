@@ -6,7 +6,7 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { socket } from '../socket';
+import socket from '../socket';
 
 const getCurrentUser = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -33,7 +33,6 @@ const MessageForm = ({ channelId }) => {
           username: getCurrentUser(),
         },
         (response) => {
-          console.log(response);
           if (response.status !== 'ok') toast.error(t('errors.networkError'));
 
           actions.resetForm();

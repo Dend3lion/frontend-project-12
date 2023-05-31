@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { selectors } from '../slices/channelsSlice';
-import { socket } from '../socket';
+import socket from '../socket';
 
 const RenameChannelButton = ({ channel }) => {
   const [show, setShow] = useState(false);

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { actions as channelsActions, selectors } from '../slices/channelsSlice';
-import { socket } from '../socket';
+import socket from '../socket';
 
 const AddChannelButton = () => {
   const [show, setShow] = useState(false);

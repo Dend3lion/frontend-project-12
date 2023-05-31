@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Dropdown, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { socket } from '../socket';
+import socket from '../socket';
 
 const RemoveChannelButton = ({ channel }) => {
   const [show, setShow] = useState(false);

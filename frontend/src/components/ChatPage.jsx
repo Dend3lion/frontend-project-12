@@ -11,7 +11,7 @@ import {
   selectors as channelsSelectors,
 } from '../slices/channelsSlice';
 import { actions as messagesActions } from '../slices/messagesSlice';
-import { socket } from '../socket';
+import socket from '../socket';
 import AddChannelButton from './AddChannelButton';
 import ChannelButton from './ChannelButton';
 import CommentsTab from './MessagesTab';

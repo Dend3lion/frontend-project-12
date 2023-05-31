@@ -48,8 +48,6 @@ const RegisterPage = () => {
       } catch (e) {
         if (e?.response?.status === 409) formik.errors.passwordConfirmation = t('register.errors.userExists');
         else toast.error(t('errors.networkError'));
-
-        console.log(e);
       }
     },
   });
