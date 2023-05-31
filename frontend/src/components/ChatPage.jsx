@@ -102,7 +102,10 @@ const ChatPage = () => {
                     }
                     id="addChannelOptions"
                     className="flex-grow-0"
-                  />
+                    ItemText="упрал"
+                  >
+                    <span hidden>{t("chat.channels.optionsLabel")}</span>
+                  </Dropdown.Toggle>
                 )}
 
                 <Dropdown.Menu>
