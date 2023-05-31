@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect } from 'react';
-import { Col, Container, Row, Stack } from 'react-bootstrap';
+import {
+  Col, Container, Row, Stack,
+} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import routes from '../routes';
 
@@ -73,10 +75,9 @@ const ChatPage = () => {
         </Col>
         <Col sm={10}>
           {channels.map(
-            (channel) =>
-              channel.id === currentChannel && (
-                <CommentsTab key={channel.id} channelId={channel.id} />
-              )
+            (channel) => channel.id === currentChannel && (
+            <CommentsTab key={channel.id} channelId={channel.id} />
+            ),
           )}
         </Col>
       </Row>

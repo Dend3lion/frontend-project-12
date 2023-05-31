@@ -1,6 +1,8 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { Button, Dropdown, FloatingLabel, Form, Modal } from 'react-bootstrap';
+import {
+  Button, Dropdown, FloatingLabel, Form, Modal,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -31,7 +33,7 @@ const RenameChannelButton = ({ channel }) => {
       return errors;
     },
     onSubmit: ({ name }) => {
-      socket.emit('renameChannel', { id: channel.id, name: name }, (response) => {
+      socket.emit('renameChannel', { id: channel.id, name }, (response) => {
         if (response.status !== 'ok') toast.error(t('errors.networkError'));
 
         handleClose();

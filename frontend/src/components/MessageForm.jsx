@@ -1,7 +1,9 @@
 import { useFormik } from 'formik';
 import filter from 'leo-profanity';
 import { useEffect } from 'react';
-import { Button, Form, InputGroup, Row } from 'react-bootstrap';
+import {
+  Button, Form, InputGroup, Row,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { socket } from '../socket';
@@ -35,7 +37,7 @@ const MessageForm = ({ channelId }) => {
           if (response.status !== 'ok') toast.error(t('errors.networkError'));
 
           actions.resetForm();
-        }
+        },
       );
     },
   });
@@ -57,7 +59,8 @@ const MessageForm = ({ channelId }) => {
           <Button
             variant="outline-secondary"
             type="submit"
-            disabled={!(formik.isValid && formik.dirty)}>
+            disabled={!(formik.isValid && formik.dirty)}
+          >
             {t('chat.messages.form.submit')}
           </Button>
         </InputGroup>

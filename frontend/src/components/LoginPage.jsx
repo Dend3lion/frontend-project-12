@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
-import { Button, Container, FloatingLabel, Form, Stack } from 'react-bootstrap';
+import {
+  Button, Container, FloatingLabel, Form, Stack,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';

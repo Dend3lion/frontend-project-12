@@ -1,6 +1,10 @@
-import { Button, Container, Nav, Navbar } from 'react-bootstrap';
+import {
+  Button, Container, Nav, Navbar,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Link, Outlet, useLocation, useNavigate,
+} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useAuth from '../hooks';
@@ -16,7 +20,8 @@ const AuthButton = () => {
       onClick={() => {
         auth.logOut();
         navigate('/');
-      }}>
+      }}
+    >
       {t('header.logout')}
     </Button>
   ) : (
