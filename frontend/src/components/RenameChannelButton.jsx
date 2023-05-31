@@ -46,11 +46,7 @@ const RenameChannelButton = ({ channel }) => {
 
   return (
     <>
-      <Dropdown.Item
-        variant="outline-primary"
-        className="mb-3"
-        onClick={handleShow}
-      >
+      <Dropdown.Item variant="outline-primary" onClick={handleShow}>
         {t("chat.channels.rename")}
       </Dropdown.Item>
 

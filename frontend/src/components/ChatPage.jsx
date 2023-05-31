@@ -3,27 +3,26 @@ import { useEffect } from "react";
 import routes from "../routes";
 import {
   Button,
-  ButtonGroup,
   Col,
   Container,
-  Dropdown,
   Row,
+  SplitButton,
   Stack,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
+import { actions as messagesActions } from "../slices/messagesSlice";
 import {
   actions as channelsActions,
   selectors as channelsSelectors,
 } from "../slices/channelsSlice";
-import { actions as messagesActions } from "../slices/messagesSlice";
 import { socket } from "../socket";
 import CommentsTab from "./MessagesTab";
 import AddChannelButton from "./AddChannelButton";
 import RenameChannelButton from "./RenameChannelButton";
 import RemoveChannelButton from "./RemoveChannelButton";
-import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import ChannelButton from "./ChannelButton";
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -83,36 +82,11 @@ const ChatPage = () => {
             <AddChannelButton />
 
             {channels.map((channel) => (
-              <Dropdown key={channel.id} as={ButtonGroup} className="w-100">
-                <Button
-                  variant={channel.id === currentChannel ? "primary" : "light"}
-                  onClick={() =>
-                    dispatch(channelsActions.setCurrentChannel(channel.id))
-                  }
-                  className="text-truncate text-start"
-                >
-                  # {channel.name}
-                </Button>
-
-                {channel.removable && (
-                  <Dropdown.Toggle
-                    split
-                    variant={
-                      channel.id === currentChannel ? "primary" : "light"
-                    }
-                    id="addChannelOptions"
-                    className="flex-grow-0"
-                    ItemText="упрал"
-                  >
-                    <span hidden>{t("chat.channels.optionsLabel")}</span>
-                  </Dropdown.Toggle>
-                )}
-
-                <Dropdown.Menu>
-                  <RenameChannelButton channel={channel} />
-                  <RemoveChannelButton channel={channel} />
-                </Dropdown.Menu>
-              </Dropdown>
+              <ChannelButton
+                key={channel.id}
+                channel={channel}
+                currentChannel={currentChannel}
+              />
             ))}
           </Stack>
         </Col>

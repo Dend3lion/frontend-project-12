@@ -21,11 +21,7 @@ const RemoveChannelButton = ({ channel }) => {
 
   return (
     <>
-      <Dropdown.Item
-        variant="outline-primary"
-        className="mb-3"
-        onClick={handleShow}
-      >
+      <Dropdown.Item variant="outline-primary" onClick={handleShow}>
         {t("chat.channels.remove")}
       </Dropdown.Item>
 
