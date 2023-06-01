@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
-import {
-  Button, Col, Container, FloatingLabel, Form, Row, Stack,
-} from 'react-bootstrap';
+import { Button, Col, Container, FloatingLabel, Form, Row, Stack } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -80,9 +78,7 @@ const LoginPage = () => {
                 </Button>
                 <hr className="mb-0" />
                 <p className="mb-0">
-                  {t('login.registerText')}
-                  {' '}
-                  <Link to="/signup">{t('login.registerLink')}</Link>
+                  {t('login.registerText')} <Link to="/signup">{t('login.registerLink')}</Link>
                 </p>
               </Stack>
             </Form>

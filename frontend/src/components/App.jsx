@@ -13,11 +13,11 @@ const App = () => (
       <Route path="/" element={<Layout />}>
         <Route
           index
-          element={(
+          element={
             <PrivateRoute>
               <ChatPage />
             </PrivateRoute>
-            )}
+          }
         />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<RegisterPage />} />

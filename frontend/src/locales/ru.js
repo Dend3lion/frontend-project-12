@@ -38,7 +38,7 @@ const ru = {
     },
     chat: {
       channels: {
-        channels: 'Каналы',
+        title: 'Каналы',
         add: 'Добавить канал',
         optionsLabel: 'Управление каналом',
         rename: 'Переименовать',

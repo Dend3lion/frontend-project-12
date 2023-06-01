@@ -1,8 +1,6 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import {
-  Button, Dropdown, FloatingLabel, Form, Modal,
-} from 'react-bootstrap';
+import { Button, Dropdown, FloatingLabel, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';

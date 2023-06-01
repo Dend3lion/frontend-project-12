@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { useEffect } from 'react';
-import {
-  Col, Container, Row, Stack,
-} from 'react-bootstrap';
+import { Col, Container, Row, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import routes from '../routes';
 
@@ -62,8 +60,8 @@ const ChatPage = () => {
   }, [dispatch]);
 
   return (
-    <Container>
-      <Row className="py-3">
+    <Container className="h-100 my-4 overflow-hidden rounded shadow-sm">
+      <Row className="h-100 bg-white">
         <Col sm={2}>
           <Stack gap={2}>
             <AddChannelButton />
@@ -75,9 +73,10 @@ const ChatPage = () => {
         </Col>
         <Col sm={10}>
           {channels.map(
-            (channel) => channel.id === currentChannel && (
-            <CommentsTab key={channel.id} channelId={channel.id} />
-            ),
+            (channel) =>
+              channel.id === currentChannel && (
+                <CommentsTab key={channel.id} channelId={channel.id} />
+              )
           )}
         </Col>
       </Row>

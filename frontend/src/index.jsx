@@ -24,5 +24,5 @@ root.render(
         </BrowserRouter>
       </Provider>
     </ErrorBoundary>
-  </RollbarProvider>,
+  </RollbarProvider>
 );

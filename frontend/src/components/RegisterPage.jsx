@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
-import {
-  Button, Col, Container, FloatingLabel, Form, Row, Stack,
-} from 'react-bootstrap';
+import { Button, Col, Container, FloatingLabel, Form, Row, Stack } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -46,7 +44,8 @@ const RegisterPage = () => {
         auth.logIn(data);
         navigate('/', { replace: true });
       } catch (e) {
-        if (e?.response?.status === 409) formik.errors.passwordConfirmation = t('register.errors.userExists');
+        if (e?.response?.status === 409)
+          formik.errors.passwordConfirmation = t('register.errors.userExists');
         else toast.error(t('errors.networkError'));
       }
     },
@@ -91,8 +90,7 @@ const RegisterPage = () => {
                 </FloatingLabel>
                 <FloatingLabel
                   controlId="passwordConfirmation"
-                  label={t('register.form.passwordConfirmation')}
-                >
+                  label={t('register.form.passwordConfirmation')}>
                   <Form.Control
                     name="passwordConfirmation"
                     type="password"

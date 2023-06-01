@@ -25,8 +25,7 @@ const CommentsTab = ({ channelId }) => {
                 key={message.id}
                 className={`m-1 px-3 py-2 bg-light text-dark ${
                   isCurrentUser ? 'align-self-end' : 'align-self-start'
-                }`}
-              >
+                }`}>
                 {!isCurrentUser && <div className="fw-semibold fs-6">{message.username}</div>}
                 <div>{message.body}</div>
               </Stack>

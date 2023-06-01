@@ -38,7 +38,7 @@ const en = {
     },
     chat: {
       channels: {
-        channels: 'Channels',
+        title: 'Channels',
         addChannel: 'Add Channel',
         optionsLabel: 'Channel Management',
         rename: 'Rename',

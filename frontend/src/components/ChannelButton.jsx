@@ -18,16 +18,13 @@ const ChannelButton = ({ channel, currentChannel }) => {
       title={`# ${channel.name}`}
       toggleLabel={t('chat.channels.optionsLabel')}
       variant={variant}
-      onClick={onClick}
-    >
+      onClick={onClick}>
       <RenameChannelButton channel={channel} />
       <RemoveChannelButton channel={channel} />
     </SplitButton>
   ) : (
     <Button variant={variant} onClick={onClick}>
-      #
-      {' '}
-      {channel.name}
+      # {channel.name}
     </Button>
   );
 };
