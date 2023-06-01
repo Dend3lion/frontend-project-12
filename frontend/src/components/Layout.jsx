@@ -1,5 +1,5 @@
 import {
-  Button, Container, Nav, Navbar,
+  Button, Container, Nav, Navbar, Stack,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import {
@@ -15,31 +15,16 @@ const AuthButton = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  return auth.loggedIn ? (
-    <Button
-      onClick={() => {
-        auth.logOut();
-        navigate('/');
-      }}
-    >
-      {t('header.logout')}
-    </Button>
-  ) : (
-    <Button as={Link} to="/login" state={{ from: location }}>
-      {t('header.login')}
-    </Button>
-  );
-};
-
-const RegistrationButton = () => {
-  const auth = useAuth();
-  const { t } = useTranslation();
-
   return (
-    !auth.loggedIn && (
-      <Nav.Link as={Link} to="/signup" className="me-3">
-        {t('header.register')}
-      </Nav.Link>
+    auth.loggedIn && (
+      <Button
+        onClick={() => {
+          auth.logOut();
+          navigate('/');
+        }}
+      >
+        {t('header.logout')}
+      </Button>
     )
   );
 };
@@ -51,19 +36,20 @@ const Layout = () => {
     <>
       <ToastContainer />
 
-      <Navbar expand="lg">
-        <Container>
-          <Navbar.Brand as={Link} to="/">
-            {t('header.brand')}
-          </Navbar.Brand>
-          <Nav>
-            <RegistrationButton />
-            <AuthButton />
-          </Nav>
-        </Container>
-      </Navbar>
+      <Stack className="h-100 bg-light">
+        <Navbar expand="lg">
+          <Container>
+            <Navbar.Brand as={Link} to="/">
+              {t('header.brand')}
+            </Navbar.Brand>
+            <Nav>
+              <AuthButton />
+            </Nav>
+          </Container>
+        </Navbar>
 
-      <Outlet />
+        <Outlet />
+      </Stack>
     </>
   );
 };

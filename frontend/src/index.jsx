@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
 import { ErrorBoundary, Provider as RollbarProvider } from '@rollbar/react';
 import ReactDOM from 'react-dom/client';
