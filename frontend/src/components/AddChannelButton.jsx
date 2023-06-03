@@ -46,9 +46,9 @@ const AddChannelButton = () => {
 
   return (
     <>
-      <Stack direction="horizontal" gap={3}>
-        <span>{t('chat.channels.title')}</span>
-        <Button variant="outline-primary" className="my-3" onClick={handleShow}>
+      <Stack direction="horizontal" className="my-3">
+        <b className="px-3">{t('chat.channels.title')}</b>
+        <Button variant="link" className="ms-auto p-0" onClick={handleShow}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -72,6 +72,7 @@ const AddChannelButton = () => {
                 type="text"
                 name="name"
                 value={formik.values.name}
+                placeholder={t('chat.modals.addChannel.placeholder')}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 isInvalid={formik.touched.name && formik.errors.name}

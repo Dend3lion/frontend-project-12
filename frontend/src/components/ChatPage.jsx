@@ -62,8 +62,8 @@ const ChatPage = () => {
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow-sm">
       <Row className="h-100 bg-white">
-        <Col sm={2}>
-          <Stack gap={2}>
+        <Col sm={2} className="h-100 p-0">
+          <Stack gap={2} className="px-2">
             <AddChannelButton />
 
             {channels.map((channel) => (
@@ -71,12 +71,10 @@ const ChatPage = () => {
             ))}
           </Stack>
         </Col>
-        <Col sm={10}>
+        <Col sm={10} className="h-100 p-0">
           {channels.map(
             (channel) =>
-              channel.id === currentChannel && (
-                <CommentsTab key={channel.id} channelId={channel.id} />
-              )
+              channel.id === currentChannel && <CommentsTab key={channel.id} channel={channel} />
           )}
         </Col>
       </Row>

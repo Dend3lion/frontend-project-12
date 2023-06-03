@@ -58,10 +58,13 @@ const RenameChannelButton = ({ channel }) => {
                 name="name"
                 value={formik.values.name}
                 onChange={formik.handleChange}
+                placeholder={t('chat.modals.addChannel.placeholder')}
                 isInvalid={formik.touched.name && formik.errors.name}
                 autoFocus
               />
-              <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid" tooltip>
+                {formik.errors.name}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Form>
         </Modal.Body>

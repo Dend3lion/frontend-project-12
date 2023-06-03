@@ -13,6 +13,7 @@ const AuthButton = () => {
   return (
     auth.loggedIn && (
       <Button
+        variant="outline-primary"
         onClick={() => {
           auth.logOut();
           navigate('/');
@@ -37,7 +38,6 @@ const Layout = () => {
               {t('header.brand')}
             </Navbar.Brand>
             <Nav>
-              ∏
               <AuthButton />
             </Nav>
           </Container>

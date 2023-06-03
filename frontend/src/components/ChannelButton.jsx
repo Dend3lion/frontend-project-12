@@ -1,4 +1,4 @@
-import { Button, SplitButton } from 'react-bootstrap';
+import { Button, ButtonGroup, Dropdown, SplitButton } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { actions } from '../slices/channelsSlice';
@@ -9,23 +9,31 @@ const ChannelButton = ({ channel, currentChannel }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const variant = channel.id === currentChannel ? 'primary' : 'light';
+  const variant = channel.id === currentChannel ? 'primary' : 'link';
   const onClick = () => dispatch(actions.setCurrentChannel(channel.id));
 
-  return channel.removable ? (
-    <SplitButton
-      id={`channel-options-${channel.id}`}
-      title={`# ${channel.name}`}
-      toggleLabel={t('chat.channels.optionsLabel')}
-      variant={variant}
-      onClick={onClick}>
-      <RenameChannelButton channel={channel} />
-      <RemoveChannelButton channel={channel} />
-    </SplitButton>
-  ) : (
-    <Button variant={variant} onClick={onClick}>
-      # {channel.name}
-    </Button>
+  return (
+    <Dropdown as={ButtonGroup}>
+      <Button
+        variant={variant}
+        onClick={onClick}
+        className="text-start">{`# ${channel.name}`}</Button>
+
+      {channel.removable && (
+        <Dropdown.Toggle
+          split
+          variant={variant}
+          id={`channel-options-${channel.id}`}
+          className="flex-grow-0">
+          <span className="visually-hidden">{t('chat.channels.optionsLabel')}</span>
+        </Dropdown.Toggle>
+      )}
+
+      <Dropdown.Menu>
+        <RenameChannelButton channel={channel} />
+        <RemoveChannelButton channel={channel} />
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
 
