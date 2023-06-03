@@ -4,6 +4,7 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useAuth from '../hooks';
+import GlobalModal from './GlobalModal';
 
 const AuthButton = () => {
   const auth = useAuth();
@@ -30,6 +31,7 @@ const Layout = () => {
   return (
     <>
       <ToastContainer />
+      <GlobalModal />
 
       <Stack className="h-100 bg-light">
         <Navbar expand="lg">

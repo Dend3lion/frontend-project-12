@@ -1,22 +1,29 @@
 import { useFormik } from 'formik';
-import { useState } from 'react';
-import { Button, Dropdown, FloatingLabel, Form, Modal } from 'react-bootstrap';
+import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { selectors } from '../slices/channelsSlice';
+import { selectors as channelsSelectors } from '../slices/channelsSlice';
+import { actions as modalActions } from '../slices/modalSlice';
 import socket from '../socket';
 
-const RenameChannelButton = ({ channel }) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+const RenameChannelModal = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const {
+    extras: { channelId },
+  } = useSelector((state) => state.modal);
 
-  const channels = useSelector(selectors.selectAll);
+  const channels = useSelector(channelsSelectors.selectAll);
+
+  const handleClose = () => {
+    dispatch(modalActions.setModal({ isShown: false, modalType: null, extras: {} }));
+    formik.handleReset();
+    formik.setErrors({});
+  };
 
   const formik = useFormik({
-    initialValues: { name: channel.name },
+    initialValues: { name: channels.find((channel) => channel.id === channelId).name },
     validate: ({ name }) => {
       const errors = {};
 
@@ -31,7 +38,7 @@ const RenameChannelButton = ({ channel }) => {
       return errors;
     },
     onSubmit: ({ name }) => {
-      socket.emit('renameChannel', { id: channel.id, name }, (response) => {
+      socket.emit('renameChannel', { id: channelId, name }, (response) => {
         if (response.status !== 'ok') toast.error(t('errors.networkError'));
 
         handleClose();
@@ -42,11 +49,7 @@ const RenameChannelButton = ({ channel }) => {
 
   return (
     <>
-      <Dropdown.Item variant="outline-primary" onClick={handleShow}>
-        {t('chat.channels.rename')}
-      </Dropdown.Item>
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal show onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{t('chat.modals.renameChannel.title')}</Modal.Title>
         </Modal.Header>
@@ -58,8 +61,9 @@ const RenameChannelButton = ({ channel }) => {
                 name="name"
                 value={formik.values.name}
                 onChange={formik.handleChange}
-                placeholder={t('chat.modals.addChannel.placeholder')}
+                placeholder={t('chat.modals.renameChannel.placeholder')}
                 isInvalid={formik.touched.name && formik.errors.name}
+                disabled={formik.isSubmitting}
                 autoFocus
               />
               <Form.Control.Feedback type="invalid" tooltip>
@@ -81,4 +85,4 @@ const RenameChannelButton = ({ channel }) => {
   );
 };
 
-export default RenameChannelButton;
+export default RenameChannelModal;

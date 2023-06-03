@@ -1,9 +1,9 @@
-import { Button, ButtonGroup, Dropdown, SplitButton } from 'react-bootstrap';
+import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { actions } from '../slices/channelsSlice';
-import RemoveChannelButton from './RemoveChannelButton';
-import RenameChannelButton from './RenameChannelButton';
+import { actions as modalActions } from '../slices/modalSlice';
+import { MODAL_TYPES } from './GlobalModal';
 
 const ChannelButton = ({ channel, currentChannel }) => {
   const dispatch = useDispatch();
@@ -30,8 +30,32 @@ const ChannelButton = ({ channel, currentChannel }) => {
       )}
 
       <Dropdown.Menu>
-        <RenameChannelButton channel={channel} />
-        <RemoveChannelButton channel={channel} />
+        <Dropdown.Item
+          variant="outline-primary"
+          onClick={() =>
+            dispatch(
+              modalActions.setModal({
+                isShown: true,
+                modalType: MODAL_TYPES.RENAME_CHANNEL_MODAL,
+                extras: { channelId: channel.id },
+              })
+            )
+          }>
+          {t('chat.channels.rename')}
+        </Dropdown.Item>
+        <Dropdown.Item
+          variant="outline-primary"
+          onClick={() =>
+            dispatch(
+              modalActions.setModal({
+                isShown: true,
+                modalType: MODAL_TYPES.REMOVE_CHANNEL_MODAL,
+                extras: { channelId: channel.id },
+              })
+            )
+          }>
+          {t('chat.channels.remove')}
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

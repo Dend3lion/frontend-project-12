@@ -1,8 +1,8 @@
+import cn from 'classnames';
 import { Stack } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { selectors } from '../slices/messagesSlice';
 import MessageForm from './MessageForm';
-import cn from 'classnames';
 
 const getCurrentUser = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
@@ -25,6 +25,7 @@ const CommentsTab = ({ channel }) => {
 
             return (
               <div
+                key={message.id}
                 className={cn('m-1', 'px-3', 'py-2', 'bg-light', 'text-dark', {
                   'align-self-end': isCurrentUser,
                   'align-self-start': !isCurrentUser,
