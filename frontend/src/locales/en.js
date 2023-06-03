@@ -4,7 +4,7 @@ const en = {
       brand: 'Hexlet Chat',
       register: 'Register',
       login: 'Login',
-      logout: '`Logout',
+      logout: 'Logout',
     },
     login: {
       title: 'Login',

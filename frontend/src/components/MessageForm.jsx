@@ -4,15 +4,12 @@ import { useEffect } from 'react';
 import { Button, Form, InputGroup, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useAuth } from '../contexts/AuthContext';
 import socket from '../socket';
-
-const getCurrentUser = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-  return userId && userId.username;
-};
 
 const MessageForm = ({ channelId }) => {
   const { t } = useTranslation();
+  const { getCurrentUser } = useAuth();
 
   useEffect(() => {
     filter.add(filter.getDictionary('en'));
@@ -23,12 +20,14 @@ const MessageForm = ({ channelId }) => {
   const formik = useFormik({
     initialValues: { body: '' },
     onSubmit: async ({ body }, actions) => {
+      const username = getCurrentUser()?.username;
+
       socket.emit(
         'newMessage',
         {
           body: filter.clean(body),
           channelId,
-          username: getCurrentUser(),
+          username,
         },
         (response) => {
           if (response.status !== 'ok') toast.error(t('errors.networkError'));

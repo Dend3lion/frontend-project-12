@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { Button, Col, Container, Row, Stack } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import routes from '../routes';
 
 import {
   actions as channelsActions,
@@ -13,13 +12,14 @@ import { actions as modalActions } from '../slices/modalSlice';
 import socket from '../socket';
 
 import { useTranslation } from 'react-i18next';
-import ChannelButton from './ChannelButton';
-import { MODAL_TYPES } from './GlobalModal';
-import CommentsTab from './MessagesTab';
+import { toast } from 'react-toastify';
+import ChannelButton from '../components/ChannelButton';
+import { MODAL_TYPES } from '../components/GlobalModal';
+import CommentsTab from '../components/MessagesTab';
+import { useAuth } from '../contexts/AuthContext';
+import routes from '../routes';
 
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-
+const getAuthHeader = (userId) => {
   if (userId && userId.token) {
     return { Authorization: `Bearer ${userId.token}` };
   }
@@ -31,17 +31,24 @@ const ChatPage = () => {
   const dispatch = useDispatch();
   const channels = useSelector(channelsSelectors.selectAll);
   const currentChannel = useSelector((state) => state.channels.currentChannelId);
+  const { getCurrentUser } = useAuth();
   const { t } = useTranslation();
 
   useEffect(() => {
     const fetchContent = async () => {
-      const { data } = await axios.get(routes.dataPath(), {
-        headers: getAuthHeader(),
-      });
+      const userId = getCurrentUser();
 
-      dispatch(channelsActions.setCurrentChannel(data.currentChannelId));
-      dispatch(channelsActions.addChannels(data.channels));
-      dispatch(messagesActions.addMessages(data.messages));
+      try {
+        const { data } = await axios.get(routes.dataPath(), {
+          headers: getAuthHeader(userId),
+        });
+
+        dispatch(channelsActions.setCurrentChannel(data.currentChannelId));
+        dispatch(channelsActions.addChannels(data.channels));
+        dispatch(messagesActions.addMessages(data.messages));
+      } catch (e) {
+        toast.error(t('errors.networkError'));
+      }
     };
 
     fetchContent();
@@ -61,12 +68,12 @@ const ChatPage = () => {
     socket.on('renameChannel', (payload) => {
       dispatch(channelsActions.updateChannel({ id: payload.id, changes: payload }));
     });
-  }, [dispatch]);
+  }, []);
 
   return (
-    <Container className="h-100 my-4 overflow-hidden rounded shadow-sm">
+    <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white">
-        <Col sm={2} className="h-100 p-0">
+        <Col xs={2} className="h-100 overflow-auto p-0">
           <Stack gap={2} className="px-2">
             <Stack direction="horizontal" className="my-3">
               <b className="px-3">{t('chat.channels.title')}</b>
@@ -100,7 +107,7 @@ const ChatPage = () => {
             ))}
           </Stack>
         </Col>
-        <Col sm={10} className="h-100 p-0">
+        <Col xs={10} className="h-100 p-0">
           {channels.map(
             (channel) =>
               channel.id === currentChannel && <CommentsTab key={channel.id} channel={channel} />

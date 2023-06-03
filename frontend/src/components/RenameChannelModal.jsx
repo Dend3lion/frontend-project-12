@@ -39,7 +39,7 @@ const RenameChannelModal = () => {
     },
     onSubmit: ({ name }) => {
       socket.emit('renameChannel', { id: channelId, name }, (response) => {
-        if (response.status !== 'ok') toast.error(t('errors.networkError'));
+        if (response.status !== 'ok') return toast.error(t('errors.networkError'));
 
         handleClose();
         toast.success(t('chat.modals.renameChannel.success'));
@@ -76,7 +76,7 @@ const RenameChannelModal = () => {
           <Button variant="secondary" onClick={handleClose}>
             {t('chat.modals.renameChannel.close')}
           </Button>
-          <Button variant="primary" onClick={formik.handleSubmit}>
+          <Button variant="primary" onClick={formik.handleSubmit} disabled={formik.isSubmitting}>
             {t('chat.modals.renameChannel.submit')}
           </Button>
         </Modal.Footer>

@@ -5,8 +5,9 @@ import { ErrorBoundary, Provider as RollbarProvider } from '@rollbar/react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import App from './components/App';
+import { AuthProvider } from './contexts/AuthContext';
 import './i18n';
+import App from './App';
 import store from './slices/index.js';
 
 const rollbarConfig = {
@@ -20,7 +21,9 @@ root.render(
     <ErrorBoundary>
       <Provider store={store}>
         <BrowserRouter>
-          <App />
+          <AuthProvider>
+            <App />
+          </AuthProvider>
         </BrowserRouter>
       </Provider>
     </ErrorBoundary>

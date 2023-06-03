@@ -17,7 +17,7 @@ const ChannelButton = ({ channel, currentChannel }) => {
       <Button
         variant={variant}
         onClick={onClick}
-        className="text-start">{`# ${channel.name}`}</Button>
+        className="text-start text-truncate">{`# ${channel.name}`}</Button>
 
       {channel.removable && (
         <Dropdown.Toggle

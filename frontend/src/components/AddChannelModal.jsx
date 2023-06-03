@@ -67,7 +67,9 @@ const AddChannelModal = () => {
               disabled={formik.isSubmitting}
               autoFocus
             />
-            <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid" tooltip>
+              {formik.errors.name}
+            </Form.Control.Feedback>
           </FloatingLabel>
         </Form>
       </Modal.Body>
