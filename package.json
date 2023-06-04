@@ -1,5 +1,5 @@
 {
-  "name": "@hexlet/code",
+  "name": "group-chat-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/Dend3lion/frontend-project-12.git"
   },
   "author": "Denis Bashkatov",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Dend3lion/frontend-project-12/issues"
   },

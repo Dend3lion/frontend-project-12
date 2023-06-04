@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/534a5214e4ed24cb0ffa/maintainability)](https://codeclimate.com/github/Dend3lion/frontend-project-12/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/534a5214e4ed24cb0ffa/test_coverage)](https://codeclimate.com/github/Dend3lion/frontend-project-12/test_coverage)
 
-This is a web app for group communications. It features real-time messaging, adding and managing channels, authorization, localization, profanity filter, errors monitoring, and more.
+This is a web app for group communications. It features real-time messaging, adding and managing channels, authorization, localization, profanity filter, errors monitoring, and more. It is a student project at Hexlet and uses its Chat API.
 
 ## Live Demo
 
@@ -30,9 +30,6 @@ To run this app locally, you will need to follow these steps:
 
 ```bash
 make install
-```
-
-```bash
 make start
 ```
 
