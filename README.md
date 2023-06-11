@@ -1,7 +1,7 @@
 # Group Chat App
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/534a5214e4ed24cb0ffa/maintainability)](https://codeclimate.com/github/Dend3lion/frontend-project-12/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/534a5214e4ed24cb0ffa/test_coverage)](https://codeclimate.com/github/Dend3lion/frontend-project-12/test_coverage)
+[![Playwright Tests](https://github.com/Dend3lion/group-chat/actions/workflows/playwright.yml/badge.svg)](https://github.com/Dend3lion/group-chat/actions/workflows/playwright.yml)
 
 This is a web app for group communications. It features real-time messaging, adding and managing channels, authorization, localization, profanity filter, errors monitoring, e2e testing, and more. It is a student project at Hexlet and uses its Chat API.
 
