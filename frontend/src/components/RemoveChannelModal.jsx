@@ -35,7 +35,7 @@ const RemoveChannelModal = () => {
         <Button variant="secondary" onClick={handleClose}>
           {t('chat.modals.removeChannel.close')}
         </Button>
-        <Button variant="danger" onClick={onSubmit}>
+        <Button variant="danger" onClick={onSubmit} data-testid="submitRemoval">
           {t('chat.modals.removeChannel.submit')}
         </Button>
       </Modal.Footer>

@@ -44,7 +44,7 @@ const LoginPage = () => {
             <Form onSubmit={formik.handleSubmit}>
               <Stack gap={3} className="align-middle ">
                 <h4 className="mx-auto">{t('login.title')}</h4>
-                <FloatingLabel controlId="loginUsername" label={t('login.form.username')}>
+                <FloatingLabel controlId="username" label={t('login.form.username')}>
                   <Form.Control
                     name="username"
                     type="text"
@@ -59,7 +59,7 @@ const LoginPage = () => {
                     {formik.errors.username}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                <FloatingLabel controlId="loginPassword" label={t('login.form.password')}>
+                <FloatingLabel controlId="password" label={t('login.form.password')}>
                   <Form.Control
                     name="password"
                     type="password"
@@ -73,11 +73,11 @@ const LoginPage = () => {
                     {formik.errors.password}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                <Button variant="outline-primary" type="submit">
+                <Button variant="outline-primary" type="submit" data-testid="submitButton">
                   {t('login.form.submit')}
                 </Button>
                 <hr className="mb-0" />
-                <p className="mb-0">
+                <p className="mb-0" data-testid="toRegister">
                   {t('login.registerText')} <Link to="/signup">{t('login.registerLink')}</Link>
                 </p>
               </Stack>

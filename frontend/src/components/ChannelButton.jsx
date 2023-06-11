@@ -24,7 +24,8 @@ const ChannelButton = ({ channel, currentChannel }) => {
           split
           variant={variant}
           id={`channel-options-${channel.id}`}
-          className="flex-grow-0">
+          className="flex-grow-0"
+          data-testid="manageChannelToggle">
           <span className="visually-hidden">{t('chat.channels.optionsLabel')}</span>
         </Dropdown.Toggle>
       )}
@@ -40,7 +41,8 @@ const ChannelButton = ({ channel, currentChannel }) => {
                 extras: { channelId: channel.id },
               })
             )
-          }>
+          }
+          data-testid="renameChannelButton">
           {t('chat.channels.rename')}
         </Dropdown.Item>
         <Dropdown.Item
@@ -53,7 +55,8 @@ const ChannelButton = ({ channel, currentChannel }) => {
                 extras: { channelId: channel.id },
               })
             )
-          }>
+          }
+          data-testid="removeChannelButton">
           {t('chat.channels.remove')}
         </Dropdown.Item>
       </Dropdown.Menu>

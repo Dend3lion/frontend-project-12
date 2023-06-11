@@ -106,7 +106,7 @@ const RegisterPage = () => {
                     {formik.errors.passwordConfirmation}
                   </Form.Control.Feedback>
                 </FloatingLabel>
-                <Button variant="outline-primary" type="submit">
+                <Button variant="outline-primary" type="submit" data-testid="submitButton">
                   {t('register.form.submit')}
                 </Button>
               </Stack>

@@ -1,7 +1,7 @@
 const en = {
   translation: {
     header: {
-      brand: 'Hexlet Chat',
+      brand: 'Group Chat',
       register: 'Register',
       login: 'Login',
       logout: 'Logout',

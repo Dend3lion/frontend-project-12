@@ -51,11 +51,13 @@ const MessageForm = ({ channelId }) => {
             onChange={formik.handleChange}
             required
             autoFocus
+            data-testid="messageInput"
           />
           <Button
             variant="outline-secondary"
             type="submit"
-            disabled={!(formik.isValid && formik.dirty)}>
+            disabled={!(formik.isValid && formik.dirty)}
+            data-testid="sendButton">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
