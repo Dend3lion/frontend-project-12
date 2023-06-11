@@ -77,8 +77,11 @@ const LoginPage = () => {
                   {t('login.form.submit')}
                 </Button>
                 <hr className="mb-0" />
-                <p className="mb-0" data-testid="toRegister">
-                  {t('login.registerText')} <Link to="/signup">{t('login.registerLink')}</Link>
+                <p className="mb-0">
+                  {t('login.registerText')}{' '}
+                  <Link to="/signup">
+                    <span data-testid="toRegister">{t('login.registerLink')}</span>
+                  </Link>
                 </p>
               </Stack>
             </Form>
