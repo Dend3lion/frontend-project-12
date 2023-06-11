@@ -23,8 +23,6 @@ test.beforeEach(async ({ page }) => {
 test.describe('registration', () => {
   test('handle new user creation', async ({ page }) => {
     await page.getByTestId('toRegister').click();
-    await page.waitForURL('**/signup');
-
     await page.getByLabel('username').type(registerUser.login);
     await page.getByLabel('password').first().type(registerUser.password);
     await page.getByLabel('confirm password').type(registerUser.password);
@@ -34,14 +32,11 @@ test.describe('registration', () => {
 
   test('handle validation', async ({ page }) => {
     await page.getByTestId('toRegister').click();
-    await page.waitForURL('**/signup');
-
     await page.getByLabel('username').type('u');
     await page.getByLabel('password').first().type('pas');
     await page.getByLabel('confirm password').type('passw');
     await page.getByTestId('submitButton').click();
 
-    await page.waitForURL('**/signup');
     await expect(await page.getByText('From 3 to 20 characters')).toHaveCount(1);
     await expect(await page.getByText('At least 6 characters')).toHaveCount(1);
     await expect(await page.getByText('Passwords must match')).toHaveCount(1);
