@@ -7,7 +7,7 @@ This is a web app for group communications. It features real-time messaging, add
 
 ## Live Demo
 
-A live demo of the app can be found at [Railway](https://frontend-project-12-production-bf1e.up.railway.app/)
+A live demo of the app can be found at [Render](https://group-chat-eju6.onrender.com/)
 
 ## Technologies Used
 
@@ -21,6 +21,12 @@ A live demo of the app can be found at [Railway](https://frontend-project-12-pro
 - Socket.io
 - Toastify
 - Rollbar
+
+## Example
+
+<p align="center">  
+<img src="media/Example.gif" alt="Example video" height="400"/></a>
+</p>
 
 ## Installation
 
